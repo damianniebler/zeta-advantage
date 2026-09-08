@@ -579,7 +579,17 @@ strong { font-weight: 600; }
 }
 
 .closing-band { position: relative; background: rgba(14, 33, 64, .55); }
-.closing-band--top { border-bottom: 1px solid rgba(255, 255, 255, .14); }
+/* Event bar runs solid yellow with near-black type so it reads as a banner. */
+.closing-band--top { background: var(--yellow); color: var(--ink); }
+.closing-band--top .closing-band-inner { padding-block: clamp(18px, 2.2vw, 26px); }
+.closing-band--top .band-flag {
+  color: var(--ink); font-weight: 700;
+  font-size: clamp(.88rem, 1.15vw, 1rem); letter-spacing: .09em;
+}
+.closing-band--top .band-detail {
+  color: var(--ink); font-weight: 600;
+  font-size: clamp(.95rem, 1.2vw, 1.08rem);
+}
 .closing-band--bottom { border-top: 1px solid rgba(255, 255, 255, .14); }
 .closing-band-inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -595,7 +605,7 @@ strong { font-weight: 600; }
   letter-spacing: .12em; text-transform: uppercase; color: var(--yellow);
 }
 .band-detail { font-size: .95rem; color: rgba(255, 255, 255, .8); }
-.event-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(242, 100, 33, .3); }
+.event-dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(242, 100, 33, .28); }
 
 .contact-line { margin-top: 18px; font-size: .95rem; color: rgba(255, 255, 255, .7); }
 .contact-line span { color: #fff; font-weight: 500; }
