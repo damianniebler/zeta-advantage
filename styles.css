@@ -265,6 +265,9 @@ strong { font-weight: 600; }
 #who { padding: clamp(72px, 9vw, 109px) 0; }
 /* FAQ: cap trimmed 128px -> 102px on desktop. */
 #faq { padding: clamp(72px, 9vw, 102px) 0; }
+/* Overview banner: the whole scale halved, since the panel already carries
+   its own generous padding and stacks under a section with 109px below it. */
+#overview { padding: clamp(36px, 4.5vw, 64px) 0; }
 /* 900px lets the intro line sit on one line (it measures ~845px) instead of
    dropping a single-word widow; the head also sits closer to the cards. */
 #zeta-difference .section-head { max-width: 900px; margin-bottom: clamp(32px, 5vw, 40px); }
@@ -629,6 +632,74 @@ strong { font-weight: 600; }
 .footer-legal { padding-top: 24px; font-size: .8rem; color: var(--muted); line-height: 1.6; }
 .footer-legal p { margin-bottom: 8px; }
 
+/* ---------- Overview banner ---------- */
+.banner-panel {
+  background: var(--grad); border-radius: var(--radius);
+  display: grid; grid-template-columns: auto 1fr;
+  gap: clamp(28px, 4vw, 60px); align-items: center;
+  padding: clamp(32px, 4vw, 48px) clamp(28px, 4vw, 56px);
+  color: #fff;
+}
+
+/* The banner is a button so it is keyboard-reachable, hence the reset. */
+.banner-thumb {
+  display: block; position: relative; cursor: pointer;
+  padding: 0; border: 0; background: transparent;
+  width: clamp(150px, 17vw, 208px);
+  border-radius: 10px;
+  transition: transform .25s ease;
+}
+.banner-thumb img {
+  width: 100%; height: auto; border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, .9);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, .45);
+}
+.banner-thumb:hover { transform: translateY(-4px); }
+.banner-zoom {
+  position: absolute; right: 10px; bottom: 10px;
+  width: 34px; height: 34px; border-radius: 9px;
+  display: grid; place-items: center;
+  background: var(--orange); color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+}
+.banner-zoom svg { width: 17px; height: 17px; }
+
+.banner-title {
+  font-family: var(--font-display); font-weight: 700; color: #fff;
+  font-size: clamp(1.5rem, 2.9vw, 2.35rem); line-height: 1.15;
+  letter-spacing: -.02em; margin: 0 0 16px;
+}
+.banner-lead { font-size: clamp(1rem, 1.35vw, 1.15rem); line-height: 1.6; color: rgba(255, 255, 255, .88); margin: 0 0 28px; }
+/* Buttons are nowrap by default; this label is long enough to overflow a
+   narrow phone, so let it wrap and cap it at the column width. */
+.banner-copy .btn { max-width: 100%; white-space: normal; text-align: center; }
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(16px, 4vh, 48px);
+  background: rgba(8, 16, 32, .92);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-img {
+  max-width: min(100%, 520px); max-height: 100%;
+  width: auto; height: auto; object-fit: contain;
+  border-radius: 8px; box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+  cursor: default;
+}
+.lightbox-close {
+  position: absolute; top: clamp(12px, 2.5vh, 24px); right: clamp(12px, 2.5vw, 24px);
+  width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
+  display: grid; place-items: center;
+  background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .3); color: #fff;
+  transition: background-color .2s ease;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, .24); }
+.lightbox-close svg { width: 20px; height: 20px; }
+
 /* ---------- Reveal on scroll ---------- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; transition-delay: calc(var(--i, 0) * 90ms); }
 .reveal.is-visible { opacity: 1; transform: none; }
@@ -658,6 +729,12 @@ strong { font-weight: 600; }
   .site-nav .btn { margin-top: 16px; }
 
   .hero-grid, .split, .founder-grid, .how-head, .who-head { grid-template-columns: 1fr; }
+  /* Banner stacks above its copy and grows, since it is the point of the panel.
+     Items stay stretched: centring them would size the copy to max-content
+     and push it past the panel. */
+  .banner-panel { grid-template-columns: minmax(0, 1fr); text-align: center; }
+  .banner-thumb { width: min(62%, 230px); margin-inline: auto; }
+  .banner-copy { display: flex; flex-direction: column; align-items: center; }
   .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero-visual { margin-top: 12px; }
   .bond-wrap { width: min(100%, 380px); }

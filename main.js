@@ -12,7 +12,7 @@
      "Start a Conversation" / "Request an Ingredient" button updates,
      and the "Direct email" line in the closing section fills in.
      ------------------------------------------------------------------ */
-  var CONTACT_EMAIL = ""; // e.g. "hello@zetadvantage.com"
+  var CONTACT_EMAIL = "docdrucker@druckerlabs.com";
 
   var mailLinks = document.querySelectorAll(".js-mailto");
   for (var i = 0; i < mailLinks.length; i++) {
@@ -90,6 +90,46 @@
       }
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
     for (var v = 0; v < revealEls.length; v++) io.observe(revealEls[v]);
+  }
+
+  /* ------------------------------------------------------------------
+     BANNER LIGHTBOX
+     Opened by the banner thumbnail and by the CTA beside it. Closes on
+     the X, the backdrop, or Escape, and returns focus where it started.
+     ------------------------------------------------------------------ */
+  var lightbox = document.getElementById("banner-lightbox");
+  if (lightbox) {
+    var lastFocused = null;
+
+    var openLightbox = function () {
+      lastFocused = document.activeElement;
+      lightbox.hidden = false;
+      document.body.style.overflow = "hidden";
+      var closeBtn = lightbox.querySelector("[data-lightbox-close]");
+      if (closeBtn) closeBtn.focus();
+    };
+
+    var closeLightbox = function () {
+      lightbox.hidden = true;
+      document.body.style.overflow = "";
+      if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+    };
+
+    var openers = document.querySelectorAll("[data-lightbox-open]");
+    for (var o = 0; o < openers.length; o++) {
+      openers[o].addEventListener("click", openLightbox);
+    }
+
+    // Backdrop and close button both dismiss; clicks on the image do not.
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox || (e.target.closest && e.target.closest("[data-lightbox-close]"))) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !lightbox.hidden) closeLightbox();
+    });
   }
 
   /* ---------- Stat count-up ---------- */
